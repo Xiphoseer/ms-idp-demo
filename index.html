@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MS IDP Demo</title>
+    <script src="https://bitwiseshiftleft.github.io/sjcl/sjcl.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <section id="card">
+        <h1>Login</h1>
+        <div id="content">
+            <p>Click the login button below:</p>
+        </div>
+        <button id="login">Login</button>
+    </section>
+    <script>
+        let CLIENT_ID = "028b488f-5b11-4792-adcd-d76ec31a5a90";
+
+        let loginButton = document.querySelector("#login").addEventListener('click', e => {
+            let url = makeAuthUrl(CLIENT_ID);
+            location.assign(url);
+        });
+        let card = document.querySelector("#card");
+        let content = document.querySelector("#content");
+
+        let url = new URL(location.href);
+        if (url.searchParams.has("error")) {
+            console.error(url.searchParams.get("error_description"));
+        }
+        if (url.searchParams.has("code")) {
+            onCallback(CLIENT_ID).then(me => {
+                let user = document.createElement("div");
+                user.classList.add("user");
+                let displayName = document.createElement('p');
+                displayName.textContent = me.displayName;
+                let userPrincipalName = document.createElement('p');
+                userPrincipalName.textContent = me.userPrincipalName;
+                user.append(displayName, userPrincipalName);
+
+                content.append(user);
+            });
+        }
+    </script>
+</body>
+
+</html>
