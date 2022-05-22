@@ -1,3 +1,4 @@
+,
 <!DOCTYPE html>
 <html>
 
@@ -35,26 +36,27 @@
         function h(name, options, children) {
             let elem = document.createElement(name);
             if (options["class"]) options["class"].forEach(element => {
-                elem.classList.append(element);
+                elem.classList.add(element);
             });
-            elem.append(...children);
+            if (options["text"]) elem.textContent = options["text"];
+            if (children) elem.append(...children);
             return elem;
         }
 
-        const c = document.createTextNode;
+        const c = document.createTextNode.bind(document);
 
         async function onLoad(graphClient) {
             let me = await graphClient.me();
             let org = await graphClient.organization();
 
             content.append(
-                h("div", { "class": ["user"] }, [
-                    h("p", c(me.displayName)),
-                    h("p", c(me.userPrincipalName))
+                h("div", { class: ["user"] }, [
+                    h("p", { text: me.displayName }),
+                    h("p", { text: me.userPrincipalName })
                 ]),
-                h("div", { "class": ["org"] }, [
-                    h("p", c(org.displayName)),
-                    h("p", c(org.id))
+                h("div", { class: ["org"] }, [
+                    h("p", { text: org.displayName }),
+                    h("p", { text: org.id })
                 ]),
             );
         }
