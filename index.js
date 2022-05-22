@@ -49,7 +49,12 @@ class MSGraphClient {
     }
 
     async organization() {
-        return new OrgEntity(await this._call('/organization'));
+        try {
+            return (await this._call('/organization'))["value"].map(x => new OrgEntity(x));
+        } catch (e) {
+            console.error(e);
+            return null;
+        }
     }
 }
 
@@ -64,7 +69,6 @@ async function redeemToken(client_id, code, redirect_uri, code_verifier) {
         'grant_type': "authorization_code",
         'code_verifier': code_verifier,
     });
-    console.log(request_data.toString());
 
     let response = await fetch(`https://login.microsoftonline.com/common/oauth2/v2.0/token`, {
         method: "POST",
