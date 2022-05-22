@@ -62,12 +62,12 @@ async function redeemToken(client_id, code, redirect_uri, code_verifier) {
     console.log("Redeeming token...");
 
     let request_data = new URLSearchParams({
-        'client_id': client_id,
-        'scope': "User.Read",
-        'code': code,
-        'redirect_uri': redirect_uri,
-        'grant_type': "authorization_code",
-        'code_verifier': code_verifier,
+        client_id: client_id,
+        scope: "User.Read",
+        code: code,
+        redirect_uri: redirect_uri,
+        grant_type: "authorization_code",
+        code_verifier: code_verifier,
     });
 
     let response = await fetch(`https://login.microsoftonline.com/common/oauth2/v2.0/token`, {
@@ -99,14 +99,15 @@ function makeAuthUrl(client_id) {
 
     let url = new URL("https://login.microsoftonline.com/common/oauth2/v2.0/authorize");
     let params = new URLSearchParams({
-        "client_id": client_id,
-        "response_type": "code",
-        "redirect_uri": redirect_uri,
-        "response_mode": "query",
-        "state": state,
-        "scope": "User.Read",
-        "code_challenge": code_challenge,
-        "code_challenge_method": "S256",
+        client_id: client_id,
+        response_type: "code",
+        redirect_uri: redirect_uri,
+        response_mode: "query",
+        state: state,
+        scope: "User.Read",
+        code_challenge: code_challenge,
+        code_challenge_method: "S256",
+        prompt: "select_account"
     });
     url.search = params.toString();
     return url;
