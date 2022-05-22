@@ -50,6 +50,9 @@
         const c = document.createTextNode.bind(document);
 
         async function onLoad(graphClient) {
+            sessionStorage.setItem("ms-graph-access-token", graphClient.credentials.access_token);
+            sessionStorage.setItem("ms-graph-refresh-token", graphClient.credentials.refresh_token);
+
             let me = await graphClient.me();
             let org = await graphClient.organization();
             console.log(me, org);

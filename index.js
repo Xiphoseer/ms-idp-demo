@@ -52,7 +52,6 @@ class MSGraphClient {
         try {
             return (await this._call('/organization'))["value"].map(x => new OrgEntity(x));
         } catch (e) {
-            console.error(e);
             return null;
         }
     }
