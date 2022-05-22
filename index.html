@@ -51,7 +51,7 @@
 
         async function onLoad(graphClient) {
             let me = await graphClient.me();
-            let org = (await graphClient.organization())[0];
+            let org = await graphClient.organization();
             console.log(me, org);
 
             content.append(
@@ -60,10 +60,10 @@
                     h("p", { text: me.userPrincipalName })
                 ])
             );
-            if (org) content.append(
+            if (org && org.length > 0) content.append(
                 h("div", { class: ["org"] }, [
-                    h("p", { text: org.displayName }),
-                    h("p", { text: org.id })
+                    h("p", { text: org[0].displayName }),
+                    h("p", { text: org[0].id })
                 ])
             );
         }
