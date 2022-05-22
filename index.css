@@ -16,10 +16,20 @@ button {
     cursor: pointer;
 }
 
+.user::before {
+    content: "User Info";
+    font-weight: bold;
+}
+
+.org::before {
+    content: "Tenant Info";
+    font-weight: bold;
+}
+
 .user, .org {
     padding: 0.5rem;
     margin-bottom: 1em;
-    background-color: #aaa;
+    background-color: #ddd;
 }
 
 .user p, .org p {
