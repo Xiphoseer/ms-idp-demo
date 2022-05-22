@@ -40,15 +40,16 @@ class MSGraphClient {
                 "Authorization": `Bearer ${this.credentials.access_token}`,
             }
         });
-        return await response.json();
+        let data = await response.json();
+        return data;
     }
 
     async me() {
-        return new UserEntity(this._call('/me'));
+        return new UserEntity(await this._call('/me'));
     }
 
     async organization() {
-        return new OrgEntity(this._call('/organization'));
+        return new OrgEntity(await this._call('/organization'));
     }
 }
 
