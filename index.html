@@ -41,7 +41,7 @@
             return elem;
         }
 
-        const t = document.createTextNode;
+        const c = document.createTextNode;
 
         async function onLoad(graphClient) {
             let me = await graphClient.me();
@@ -49,12 +49,12 @@
 
             content.append(
                 h("div", { "class": ["user"] }, [
-                    h("p", t(me.displayName)),
-                    h("p", t(me.userPrincipalName))
+                    h("p", c(me.displayName)),
+                    h("p", c(me.userPrincipalName))
                 ]),
                 h("div", { "class": ["org"] }, [
-                    h("p", t(org.displayName)),
-                    h("p", t(org.id))
+                    h("p", c(org.displayName)),
+                    h("p", c(org.id))
                 ]),
             );
         }
