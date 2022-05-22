@@ -30,18 +30,36 @@
         if (url.searchParams.has("error")) {
             console.error(url.searchParams.get("error_description"));
         }
-        if (url.searchParams.has("code")) {
-            onCallback(CLIENT_ID).then(me => {
-                let user = document.createElement("div");
-                user.classList.add("user");
-                let displayName = document.createElement('p');
-                displayName.textContent = me.displayName;
-                let userPrincipalName = document.createElement('p');
-                userPrincipalName.textContent = me.userPrincipalName;
-                user.append(displayName, userPrincipalName);
 
-                content.append(user);
+        function h(name, options, children) {
+            let elem = document.createElement(name);
+            if (options["class"]) options["class"].forEach(element => {
+                elem.classList.append(element);
             });
+            elem.append(...children);
+            return elem;
+        }
+
+        const t = document.createTextNode;
+
+        async function onLoad(graphClient) {
+            let me = await graphClient.me();
+            let org = await graphClient.organization();
+
+            content.append(
+                h("div", { "class": ["user"] }, [
+                    h("p", t(me.displayName)),
+                    h("p", t(me.userPrincipalName))
+                ]),
+                h("div", { "class": ["org"] }, [
+                    h("p", t(org.displayName)),
+                    h("p", t(org.id))
+                ]),
+            );
+        }
+
+        if (url.searchParams.has("code")) {
+            onCallback(CLIENT_ID).then(onLoad);
         }
     </script>
 </body>

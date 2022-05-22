@@ -16,13 +16,13 @@ button {
     cursor: pointer;
 }
 
-.user {
+.user, .org {
     padding: 0.5rem;
     margin-bottom: 1em;
     background-color: #aaa;
 }
 
-.user p {
+.user p, .org p {
     margin: 0;
 }
 

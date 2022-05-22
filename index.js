@@ -21,20 +21,34 @@ class UserEntity {
     }
 }
 
+class OrgEntity {
+    constructor(options) {
+        this.id = options["id"]
+        this.displayName = options["displayName"];
+    }
+}
+
 const BASE = "https://graph.microsoft.com/v1.0";
 class MSGraphClient {
     constructor(options) {
         this.credentials = options["credentials"];
     }
 
-    async me() {
-        let response = await fetch(`${BASE}/me`, {
+    async _call(path) {
+        let response = await fetch(BASE + path, {
             headers: {
                 "Authorization": `Bearer ${this.credentials.access_token}`,
             }
         });
-        let data = await response.json();
-        return new UserEntity(data);
+        return await response.json();
+    }
+
+    async me() {
+        return new UserEntity(this._call('/me'));
+    }
+
+    async organization() {
+        return new OrgEntity(this._call('/organization'));
     }
 }
 
@@ -104,6 +118,5 @@ async function onCallback(client_id) {
         credentials
     });
 
-    let me = await graphClient.me();
-    return me;
+    return graphClient;
 }
