@@ -92,6 +92,7 @@ function makeAuthUrl(client_id) {
     let redirect_uri = current_uri.toString();
     console.log("redirect_uri=", redirect_uri);
     let tenant_id = current_uri.searchParams.get('tenant_id') || "common";
+    console.log("tenant_id=", tenant_id);
 
     let state = base64url.fromBits(random.randomWords(10));
     sessionStorage.setItem(`oauth-login-${state}-verifier`, code_verifier);
