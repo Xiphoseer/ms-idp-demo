@@ -20,14 +20,17 @@
     <script>
         let CLIENT_ID = "028b488f-5b11-4792-adcd-d76ec31a5a90";
 
+        let url = new URL(location.href);
+        let tenant_id = url.searchParams.get('tenant_id') || "common";
+        console.log("tenant_id=", tenant_id);
+
         let loginButton = document.querySelector("#login").addEventListener('click', e => {
-            let url = makeAuthUrl(CLIENT_ID);
+            let url = makeAuthUrl(CLIENT_ID, tenant_id);
             location.assign(url);
         });
         let card = document.querySelector("#card");
         let content = document.querySelector("#content");
-
-        let url = new URL(location.href);
+        
         if (url.searchParams.has("error")) {
             console.error(url.searchParams.get("error_description"));
         }

@@ -82,7 +82,7 @@ async function redeemToken(client_id, code, redirect_uri, code_verifier) {
     return new OAuthCredentials(response_data);
 }
 
-function makeAuthUrl(client_id) {
+function makeAuthUrl(client_id, tenant_id) {
     // Generate code verifier
     let code_verifier = base64url.fromBits(random.randomWords(10));
     let code_challenge = base64url.fromBits(sha256.hash(code_verifier));
@@ -91,8 +91,6 @@ function makeAuthUrl(client_id) {
     current_uri.search = "";
     let redirect_uri = current_uri.toString();
     console.log("redirect_uri=", redirect_uri);
-    let tenant_id = current_uri.searchParams.get('tenant_id') || "common";
-    console.log("tenant_id=", tenant_id);
 
     let state = base64url.fromBits(random.randomWords(10));
     sessionStorage.setItem(`oauth-login-${state}-verifier`, code_verifier);
